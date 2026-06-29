@@ -1,38 +1,82 @@
-/*
-  Extracted JavaScript from uploaded HTML.
-  Note: the original page also referenced these external script(s), which are not expanded here:
-<script data-proxy-url="/~api/analytics" defer="" src="/~flock.js"></script>
-<script data-artifact-id="b52330b14647dbcc3f667cbb3beece2c549cd9c5d79c29ce0622a62d798545d4" data-artifact-kind="dwl_content_hash" data-commit-sha="7f1cf123aaaef1e73236410d94d9d46eac42b4c0" data-context-token="v1.eyJwcm9qZWN0X2lkIjoiYTJkYjFjMjMtODFiMC00MTM1LTkyYTAtOTcyYmIyZTgyNDc5IiwiYXJ0aWZhY3Rfa2luZCI6ImR3bF9jb250ZW50X2hhc2giLCJhcnRpZmFjdF9pZCI6ImI1MjMzMGIxNDY0N2RiY2MzZjY2N2NiYjNiZWVjZTJjNTQ5Y2Q5YzVkNzljMjljZTA2MjJhNjJkNzk4NTQ1ZDQiLCJjb21taXRfc2hhIjoiN2YxY2YxMjNhYWFlZjFlNzMyMzY0MTBkOTRkOWQ0NmVhYzQyYjRjMCIsImV4cCI6MTc4MjcyNjAwM30.4KI5biLmXykThjZkBS08jl0zfUCw3De3RqPwz_pXwso" defer="" src="/__l5e/events.js"></script>
-<script async="" src="/assets/index-gUfCRkAE.js" type="module"></script>
-*/
+const slides = document.querySelectorAll(".card");
+const counter = document.getElementById("slideCounter");
+let currentSlide = 0;
 
-(function(a,f){let l;try{l=JSON.parse(sessionStorage.getItem(a)||"{}")}catch{return}const n=l?.[f||history.state?.__TSR_key];let c=!1;for(const t in n){const e=n[t],o=e?.scrollX,s=e?.scrollY;if(Number.isFinite(o)&&Number.isFinite(s)){if(t==="window")scrollTo(o,s),c=!0;else if(t)try{const r=document.querySelector(t);r&&(r.scrollLeft=o,r.scrollTop=s)}catch{}}}if(c)return;const i=location.hash.slice(1);if(i){const t=history.state?.__hashScrollIntoViewOptions??!0;if(t){const e=document.getElementById(i);e&&e.scrollIntoView(t)}return}scrollTo(0,0)})("tsr-scroll-restoration-v1_3");document.currentScript.remove()
+function updateSlides() {
+  slides.forEach((slide, index) => {
+    slide.classList.remove("active", "left", "right");
+    if (index === currentSlide) {
+      slide.classList.add("active");
+    } else if (index === (currentSlide + 1) % slides.length) {
+      slide.classList.add("right");
+    } else {
+      slide.classList.add("left");
+    }
+  });
+  counter.textContent = String(currentSlide + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+}
 
-(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-gUfCRkAE.js"],scripts:$R[5]=[$R[6]={attrs:$R[7]={type:"module",async:!0,src:"/assets/index-gUfCRkAE.js"}}]},"/":$R[8]={preloads:$R[9]=["/assets/routes-DMTBxW2z.js","/assets/createLucideIcon-D9qjfXGw.js"]}}},matches:$R[10]=[$R[11]={i:"__root__",u:1782722403224,s:"success",ssr:!0},$R[12]={i:"",u:1782722403224,s:"success",ssr:!0}],lastMatchId:""})($R["tsr"]);$_TSR.e();document.currentScript.remove()
+document.getElementById("nextBtn").addEventListener("click", () => {
+  currentSlide = (currentSlide + 1) % slides.length;
+  updateSlides();
+});
 
+document.getElementById("prevBtn").addEventListener("click", () => {
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  updateSlides();
+});
 
-	// Don't show the lovable-badge if the page is in an iframe or if it's being rendered by puppeteer (screenshot service)
-	if (window.self !== window.top || navigator.userAgent.includes('puppeteer')) {
-		var badge = document.getElementById('lovable-badge');
-		if (badge) {
-			badge.style.display = 'none';
-		}
-	}
+setInterval(() => {
+  currentSlide = (currentSlide + 1) % slides.length;
+  updateSlides();
+}, 4200);
 
-	// Add click event listener to close button with animation
-	var closeButton = document.getElementById('lovable-badge-close');
-	if (closeButton) {
-		closeButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			var badge = document.getElementById('lovable-badge');
-			if (badge) {
-				badge.classList.add('closing');
-				setTimeout(function() {
-					if (badge) {
-						badge.style.display = 'none';
-					}
-				}, 240);
-			}
-		});
-	}
+const experiences = [
+  {
+    title: "2020年 · 好感創意設計有限公司・台北",
+    text: "在這裡第一次接觸到真實客戶與截止日期的壓力。協助資深設計師完成品牌提案、印刷品排版與簡報視覺，也負責整理設計素材庫與供應商聯絡。雖然是打雜起步，但正是這段時期讓我養成對細節的執著。",
+    tags: ["排版設計", "印刷品", "簡報製作"]
+  },
+  {
+    title: "2021年 · MUSE 品牌顧問公司・台北",
+    text: "進入品牌顧問環境後，學會從策略反推視覺。負責中小型品牌的識別系統、提案視覺與社群延伸應用，第一次帶領小型專案到上線。",
+    tags: ["品牌策略", "識別系統", "社群延伸"]
+  },
+  {
+    title: "2023年 · Nextway 科技新創・台北",
+    text: "加入科技新創團隊後，開始把設計帶進產品開發流程。負責 App 與官網的視覺、互動原型、設計系統建置，與工程師密切協作。",
+    tags: ["產品設計", "設計系統", "原型互動"]
+  }
+];
+
+const expDetail = document.getElementById("expDetail");
+const expButtons = document.querySelectorAll(".exp-btn");
+
+function setExperience(index) {
+  const item = experiences[index];
+  expDetail.innerHTML = `
+    <h3>${item.title}</h3>
+    <p>${item.text}</p>
+    <div class="tags">${item.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
+  `;
+  expButtons.forEach(btn => btn.classList.remove("active"));
+  expButtons[index].classList.add("active");
+}
+
+expButtons.forEach(button => {
+  button.addEventListener("mouseenter", () => setExperience(Number(button.dataset.index)));
+  button.addEventListener("click", () => setExperience(Number(button.dataset.index)));
+});
+
+setExperience(0);
+
+document.getElementById("inquiry").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const message = document.getElementById("quickMessage").value.trim();
+  alert(message ? "已收到你的訊息：" + message : "請先輸入想說的話。");
+});
+
+document.getElementById("contactForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  alert("表單已送出！這是前端示範版，尚未串接後端。");
+});
